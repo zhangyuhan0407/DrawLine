@@ -38,7 +38,6 @@ public class DogHead : MonoBehaviour
         {
             if (transform.position.y < -600)
             {
-                Debug.Log(transform.position.y + "");
                 DLGameManager.Instance.GameLost();
             }
         }
@@ -57,11 +56,12 @@ public class DogHead : MonoBehaviour
     IEnumerator EndGame()
     {
         yield return new WaitForSeconds(3);
-        //UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        
         if(DLGameManager.Instance.state == GameState.Running)
         {
             DLGameManager.Instance.CaptureScreen();
         }
+
         DLGameManager.Instance.GameLost();
     }
 

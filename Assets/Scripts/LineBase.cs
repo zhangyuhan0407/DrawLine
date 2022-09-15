@@ -9,5 +9,5 @@ public class LineBase : MaskableGraphic
     public virtual void InitLine() { }
     public virtual void AddPoint(Vector3 point) { }
     public virtual void ClearPoint() { }
-    public virtual void StartGame() { }
+    public virtual void GameStart() { }
 }

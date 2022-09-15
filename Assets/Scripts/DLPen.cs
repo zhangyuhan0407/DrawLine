@@ -17,7 +17,7 @@ public class DLPen : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     Vector3 lastPoint = Vector3.zero;
     public bool inArea = true;
     float thresholdTwoPoints = 0.2f;
-    
+
     public LineType lineType;
 
 
@@ -29,7 +29,7 @@ public class DLPen : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
 
     private void Start()
     {
-        
+
         switch (lineType)
         {
             case LineType.Mesh:
@@ -49,7 +49,7 @@ public class DLPen : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     public void OnBeginDrag(PointerEventData eventData)
     {
 
-        if(DLGameManager.Instance.state != GameState.Begin)
+        if (DLGameManager.Instance.state != GameState.Begin)
         {
             return;
         }
@@ -66,24 +66,25 @@ public class DLPen : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             return;
         }
 
-        Vector3 point =  Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)); ;
+        Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)); ;
         if (lineType == LineType.Mesh)
         {
             point = transform.InverseTransformPoint(point);
         }
-    
+
         if (lastPoint == Vector3.zero)
         {
             lastPoint = point;
         }
 
-        if (curline == null )
+        if (curline == null)
         {
             return;
         }
 
         if (eventData.pointerEnter == null)
         {
+            Debug.Log("eventData.pointerEnter null");
             if (inArea == true)
             {
                 inArea = false;
@@ -107,6 +108,7 @@ public class DLPen : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         }
         else
         {
+            Debug.Log(eventData.pointerEnter.name);
             if (inArea == true)
             {
                 inArea = false;
@@ -121,9 +123,11 @@ public class DLPen : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         {
             return;
         }
-        
-        curline.StartGame();
+
+        //curline.GameStart();
         GameObject.FindObjectOfType<Canvas>().BroadcastMessage("GameStart");
+
+
         //DLGameManager.Instance.GameStart();
     }
 
@@ -144,7 +148,7 @@ public class DLPen : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
 
     private void OnDestroy()
     {
-       curline = null;
+        curline = null;
     }
 
 

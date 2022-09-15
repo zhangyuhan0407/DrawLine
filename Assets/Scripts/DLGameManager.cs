@@ -44,10 +44,10 @@ public class DLGameManager : MonoBehaviour
         {
             DLPlayerManager.Instance.Create();
         }
-
+        
         state = GameState.Begin;
 
-        DLPlayerManager.Instance.level = 3;
+        DLPlayerManager.Instance.level = 1;
 
         LoadCurrentLevel();
 
@@ -72,6 +72,7 @@ public class DLGameManager : MonoBehaviour
         EnterState(GameState.End);
     }
 
+    
 
     public void GameWin()
     {
@@ -81,7 +82,8 @@ public class DLGameManager : MonoBehaviour
         }
 
         CaptureScreen();
-
+        
+        
         Invoke("aaa", 1);
         
     }
@@ -128,6 +130,8 @@ public class DLGameManager : MonoBehaviour
             panelWin.SetActive(false);
             panelLost.SetActive(false);
         }
+
+        SaveDogController.instance.UpdateUI();
     }
 
     
@@ -168,7 +172,7 @@ public class DLGameManager : MonoBehaviour
 
         GameObject parent = GameObject.Find("/Canvas/SaveDogWin");
         PanelLevel.transform.SetParent(parent.transform, false);
-        PanelLevel.transform.SetSiblingIndex(1);
+        PanelLevel.transform.SetSiblingIndex(0);
 
         state = GameState.Begin;
 
@@ -201,34 +205,15 @@ public class DLGameManager : MonoBehaviour
 
     public void CaptureScreen()
     {
-        Debug.Log("CaptureScreen");
         if (File.Exists("Assets/Resources/Screenshot.png"))
         {
-            Debug.Log("File Exists");
             File.Delete("Assets/Resources/Screenshot.png");
-        }
-        else
-        {
-            Debug.Log("File Not Exists");
         }
         
         ScreenCapture.CaptureScreenshot("Assets/Resources/Screenshot.png", 1);
     }
 
-
-    //public Texture2D CaptureScreen()
-    //{
-        
-
-    //    Rect r = new Rect(Vector2.zero, new Vector2(300, 300));
-    //    Texture2D ret = new Texture2D((int)r.width, (int)r.height, TextureFormat.RGB24, false);
-    //    ret.ReadPixels(r, 0, 0);
-    //    ret.Apply();
-
-    //    return ret;
-    //}
-
-
+    
 
     private Sprite ConvertTextureToSprite(byte[] bytes)
     {

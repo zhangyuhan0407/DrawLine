@@ -10,15 +10,22 @@ public class Cellular : MonoBehaviour
     public float launchForce = 13500f;
     public string dogTag = "Dog";
 
-    public int beesCount = 5;
+    public int beesCount = 1;
     public float interval = 3;
 
 
     private void Start()
     {
         //GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
+        beesCount = 5;
+        
+        if(transform.position.x > 0)
+        {
+            gameObject.transform.rotation = new Quaternion(0, 180, 0, 0);
+            spawnPos.localPosition = new Vector3(21.5f, 0f, 0);
+        }
     }
-
+    
 
     IEnumerator SpawnBees()
     {
@@ -53,8 +60,32 @@ public class Cellular : MonoBehaviour
     public void GameStart()
     {
         StartCoroutine(SpawnBees());
+
+        //GetComponent<Rigidbody2D>().posi
     }
 
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.tag == "Line")
+        {
+            StartCoroutine(EndGame());
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        }
+    }
+
+
+    IEnumerator EndGame()
+    {
+        yield return new WaitForSeconds(3);
+
+        if (DLGameManager.Instance.state == GameState.Running)
+        {
+            DLGameManager.Instance.CaptureScreen();
+        }
+
+        DLGameManager.Instance.GameLost();
+    }
 
 }
 

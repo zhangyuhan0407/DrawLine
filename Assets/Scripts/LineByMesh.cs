@@ -90,7 +90,7 @@ public class LineByMesh : LineBase
     }
 
 
-    public override void StartGame()
+    public override void GameStart()
     {
         rig.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         rig.simulated = true;

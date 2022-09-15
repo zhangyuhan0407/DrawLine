@@ -23,7 +23,7 @@ public class DLPlayerManager : MonoBehaviour
     public void Create()
     {
         gold = 0;
-        level = 3;
+        level = 1;
         Save();
     }
 
